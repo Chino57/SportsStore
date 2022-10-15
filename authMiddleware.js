@@ -10,15 +10,15 @@ const mappings = {
     post: ["/api/products", "/products", "/api/categories", "/categories"]
 }
 
-function requiresAuth(method,url) {
+function requiresAuth(method, url) {
    return (mappings[method.toLowerCase()] || [])
         .find(p => url.startsWith(p)) !== undefined;
 }
 
 module.exports = function (req, res, next) {
     if (req.url.endsWith("/login") && req.method == "POST") {
-        if (req.body && req.body.name == USERNAME && req.body.PASSWORD == PASSWORD) {
-            let token = jwt.sign({data: USERNAME, expiresIn: "1h" }, APP_SECRET);
+        if (req.body && req.body.name == USERNAME && req.body.password == PASSWORD) {
+            let token = jwt.sign({ data: USERNAME, expiresIn: "1h" }, APP_SECRET);
             res.json({ success: true, token: token });
         } else {
             res.json({ success: false });
